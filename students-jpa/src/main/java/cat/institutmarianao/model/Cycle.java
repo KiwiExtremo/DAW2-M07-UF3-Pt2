@@ -3,10 +3,25 @@ package cat.institutmarianao.model;
 
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 //TODO Add Jakarta Persistence and validation annotations
+@Entity
+@Table(name = "cycles")
 public class Cycle {
 
+	@Id
+	@Column(name = "code")
 	private String code;
+
+	@NotBlank
+	@Size(max = 255)
+	@Column(name = "name")
 	private String name;
 
 	public String getCode() {

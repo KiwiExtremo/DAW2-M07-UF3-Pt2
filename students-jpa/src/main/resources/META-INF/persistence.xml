@@ -7,7 +7,16 @@
 		transaction-type="JTA">
 		
 		<!-- TODO configure JTA connection -->
+		<jta-data-source>jdbc/students</jta-data-source>
+		
 		<!-- TODO add entities -->
+        <class>cat.institutmarianao.model.Student</class>
+        <class>cat.institutmarianao.model.Module</class>
+        <class>cat.institutmarianao.model.Cycle</class>
+        
+        <properties>
+            <property name="eclipselink.logging.level" value="FINEST"/>
+        </properties>
 
 	</persistence-unit>
 </persistence>

@@ -3,11 +3,38 @@ package cat.institutmarianao.model;
 
 import java.util.Objects;
 
-//TODO Add Jakarta Persistence and validation annotations
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table(name = "modules")
 public class Module {
+
+	@Id
+	@NotBlank
+	@Column(name = "code")
 	private String code;
+
+	@Id
+	@NotBlank
+	@Column(name = "cycle_code")
 	private String cycleCode;
+
+	@NotBlank
+	@Size(max = 255)
+	@Column(name = "name")
 	private String name;
+
+	@NotEmpty
+	@ManyToOne
+	@JoinColumn(name = "cycle_code", insertable = false, nullable = false, updatable = false)
 	private Cycle cycle;
 
 	public String getCode() {

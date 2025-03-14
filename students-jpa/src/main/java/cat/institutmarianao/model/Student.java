@@ -5,14 +5,59 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 //TODO Add Jakarta Persistence and validation annotations
+@Entity
+@Table(name = "students")
 public class Student {
 
+	@Id
+	@Column(name = "dni")
 	private String dni;
+
+	@NotBlank
+	@Size(max = 200)
+	@Column(name = "name")
 	private String name;
+
+	@NotBlank
+	@Size(max = 200)
+	@Column(name = "surname")
 	private String surname;
+
+	@NotBlank
+	@Size(max = 200)
+	@Column(name = "email")
 	private String email;
 
+	// @formatter:off
+	@NotEmpty
+	@ManyToMany
+	@JoinTable(
+		name = "modules_students", 
+		joinColumns = @JoinColumn(name = "student_dni"), 
+		inverseJoinColumns = {
+			@JoinColumn(
+				name = "module_code", 
+				referencedColumnName = "code"
+			),
+			@JoinColumn(
+				name = "module_cycle_code",
+				referencedColumnName = "cycle_code"
+			)
+		}
+	)
+	// @formatter:on
 	private List<Module> modules;
 
 	public String getDni() {

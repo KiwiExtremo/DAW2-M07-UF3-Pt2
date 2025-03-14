@@ -91,6 +91,44 @@ public class StudentServiceImplTest {
 	}
 
 	@Test
+	public void testRemoveWhenStudentIsNotManaged() {
+		Student byron = new Student();
+		byron.setDni("31415927C");
+		byron.setName("Lord");
+		byron.setSurname("Byron");
+		byron.setEmail("lord@byron.uk");
+
+		Module asixM01 = new Module();
+		asixM01.setCode("M01");
+		asixM01.setCycleCode("ASIX");
+
+		Module asixM02 = new Module();
+		asixM02.setCode("M02");
+		asixM02.setCycleCode("ASIX");
+
+		byron.setModules(Arrays.asList(asixM01, asixM02));
+
+		// Add the student
+		studentService.add(byron);
+
+		// Create detached student with same DNI as managed one
+		Student byronDetached = new Student();
+		byronDetached.setDni("31415927C");
+		byronDetached.setName("A");
+		byronDetached.setSurname("B");
+		byronDetached.setEmail("C@D.E");
+
+		byronDetached.setModules(Arrays.asList(asixM01, asixM02));
+
+		// Remove detached student
+		studentService.remove(byronDetached);
+
+		// Verify the detached student was removed
+		Student removedStudent = studentService.findByPk("31415927C");
+		assertNull(removedStudent);
+	}
+
+	@Test
 	public void testAddAndRemoveByDni() {
 		Student byron = new Student();
 		byron.setDni("31415927C");
@@ -115,11 +153,21 @@ public class StudentServiceImplTest {
 		Student addedStudent = studentService.findByPk("31415927C");
 		assertNotNull(addedStudent);
 
-		studentService.removeByDni("12345678C");
+		studentService.removeByDni("31415927C");
 
 		// Verify the student was removed
-		Student removedStudent = studentService.findByPk("12345678C");
+		Student removedStudent = studentService.findByPk("31415927C");
 		assertNull(removedStudent);
 	}
 
+	@Test
+	public void testRemoveByDniWhenDniIsInvalid() {
+		String invalidDni = "";
+
+		// Verify student is not on DB
+		Student nullStudent = studentService.findByPk(invalidDni);
+		assertNull(nullStudent);
+
+		studentService.removeByDni(invalidDni);
+	}
 }

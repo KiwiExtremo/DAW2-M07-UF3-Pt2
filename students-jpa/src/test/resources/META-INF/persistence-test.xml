@@ -5,13 +5,30 @@
 	<persistence-unit name="StudentsPersistenceUnitTest"
 		transaction-type="JTA">
 		<!-- TODO Configure persistence provider -->
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		
 		<!-- TODO Add entities -->
+        <class>cat.institutmarianao.model.Student</class>
+        <class>cat.institutmarianao.model.Module</class>
+        <class>cat.institutmarianao.model.Cycle</class>
 		<properties>
 			<property name="jakarta.persistence.transactionType"
 				value="JTA" />
 
 			<!-- TODO Add jakarta database connection parameters -->
-			
-		</properties>
+            <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver" />
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:students" />
+            <property name="jakarta.persistence.jdbc.user" value="user" />
+            <property name="jakarta.persistence.jdbc.password" value="password" />
+           
+           <property
+                name="jakarta.persistence.schema-generation.database.action"
+                value="drop-and-create" />
+            <property
+                name="jakarta.persistence.schema-generation.create-source"
+                value="script" />
+            <property name="jakarta.persistence.sql-load-script-source"
+                value="db_test.sql" />
+        </properties>
 	</persistence-unit>
 </persistence>

@@ -7,7 +7,6 @@ import jakarta.ejb.Local;
 
 @Local
 public interface CycleService {
-
 	List<Cycle> findAll();
 
 }
